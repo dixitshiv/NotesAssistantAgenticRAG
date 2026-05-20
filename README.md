@@ -6,6 +6,42 @@ through LangSmith.
 
 ---
 
+## Quickstart
+
+For a fresh machine — installs everything from scratch and runs:
+
+```bash
+# 1. Install uv (Python package manager) and Ollama (LLM runtime)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -fsSL https://ollama.com/install.sh | sh        # or download from ollama.com
+
+# 2. Clone and install Python deps
+git clone https://github.com/dixitshiv/NotesAssistantAgenticRAG.git
+cd NotesAssistantAgenticRAG
+uv sync
+
+# 3. Pull the models
+ollama pull nomic-embed-text
+ollama pull gemma4:31b-cloud
+# If gemma4:31b-cloud isn't available to you, use a local model instead:
+#   ollama pull llama3.2
+# then edit notes_assistant/config.py: MODEL = "ollama:llama3.2"
+
+# 4. Configure — copy the template and edit NOTES_DIR
+cp .env.example .env
+# Open .env and set NOTES_DIR to the absolute path of your markdown folder.
+
+# 5. Run
+uv run python -m notes_assistant.main
+```
+
+If something fails, the most common culprits in order of likelihood:
+(1) Ollama isn't running — `ollama serve` in a separate terminal,
+(2) `NOTES_DIR` is missing or has no `.md` files,
+(3) the model in `config.py` isn't pulled locally.
+
+---
+
 ## Stack
 
 | Layer | Technology |
